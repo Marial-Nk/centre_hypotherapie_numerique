@@ -1,6 +1,6 @@
-# Num-risation_du-_centre_d-hypoth-rapie
+# Numerisation du centre d hypotherapie
 
-Le centre d’hypothérapie accueil des personnes en situations de faiblesse dans un 
+Le centre d’hypotherapie accueil des personnes en situations de faiblesse dans un 
 manège.
  Actuellement les arrivées, la gestion des poneys et les factures se font 
 manuellement sur format papier, le but est donc de moderniser ceci avec l’aide 
