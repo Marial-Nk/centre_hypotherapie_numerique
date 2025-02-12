@@ -11,4 +11,9 @@ class Poney extends Model
 
     protected $fillable = ['name', 'work_time']; // Ajouter les champs autorisés
 
+    public function reservations()
+    {
+        return $this->belongsToMany(Reservation::class);
+    }
+
 }

@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PoneyController;
+use App\Http\Controllers\GestionJournaliereController;
+use App\Http\Controllers\ReservationController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -30,5 +32,13 @@ Route::get('/logout-and-register', [UserController::class, 'logoutAndRegister'])
     ->name('users.logoutAndRegister');
 
 Route::resource('poney', PoneyController::class)->middleware('auth');
-    
+
+Route::get('/gestion-journaliere', [GestionJournaliereController::class, 'index'])
+    ->middleware('auth')
+    ->name('gestion-journaliere.index');
+
+Route::post('/gestion-journaliere/store', [ReservationController::class, 'store'])
+    ->middleware('auth')
+    ->name('reservation.store');
+
 require __DIR__.'/auth.php';
