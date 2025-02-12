@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PoneyController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,5 +28,7 @@ Route::resource('users', UserController::class)->middleware('auth');
 Route::get('/logout-and-register', [UserController::class, 'logoutAndRegister'])
     ->middleware('auth')
     ->name('users.logoutAndRegister');
+
+Route::resource('poney', PoneyController::class)->middleware('auth');
     
 require __DIR__.'/auth.php';
