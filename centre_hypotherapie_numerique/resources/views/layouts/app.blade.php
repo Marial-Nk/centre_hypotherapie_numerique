@@ -30,6 +30,7 @@
             <!-- Page Content -->
             <main>
                 {{ $slot }}
+                :,;nwytxvctgbcftgf
             </main>
         </div>
     </body>
