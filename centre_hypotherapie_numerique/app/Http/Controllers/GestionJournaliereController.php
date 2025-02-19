@@ -11,8 +11,12 @@ class GestionJournaliereController extends Controller
 {
     public function index()
     {
-        $date_du_jour = Carbon::now()->locale('fr')->isoFormat('dddd D MMMM YYYY'); // Date du jour en français
-        $reservations = Reservation::with('poneys')->whereDate('date', Carbon::today())->get();
+        $date_du_jour = Carbon::now()->format('Y-m-d');
+
+        // Récupérer les réservations du jour
+        $reservations = Reservation::whereDate('start_time', $date_du_jour)->with('poneys')->get();
+        
+        // Récupérer la liste des poneys
         $poneys = Poney::all();
 
         return view('gestion-journaliere.index', compact('date_du_jour', 'reservations', 'poneys'));

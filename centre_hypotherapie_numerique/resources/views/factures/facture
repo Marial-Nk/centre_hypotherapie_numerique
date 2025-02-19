@@ -1,0 +1,145 @@
+@extends('layouts.app')
+
+@section('title', 'Gestion des factures')
+
+@section('content')
+<h2>{{ \Carbon\Carbon::now()->isoFormat('dddd D MMMM YYYY') }}</h2>
+<div class="container">
+<div class="container">
+    <!-- 🔥 Historique des recettes -->
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Historique</h3>
+            <ul class="list-group">
+                @foreach ($recettesParMois as $recette)
+                    <li class="list-group-item">
+                        <a href="{{ route('factures.index', ['mois' => $recette->mois]) }}">
+                            {{ \Carbon\Carbon::createFromFormat('Y-m', $recette->mois)->translatedFormat('MMMM Y') }} - {{ number_format($recette->total, 2) }}€
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+
+    <!-- 🔥 Détails des réservations du mois sélectionné -->
+    <div class="row mt-4">
+        <div class="col-md-8">
+            <h3>Recettes du Mois : {{ \Carbon\Carbon::createFromFormat('Y-m', $moisSelectionne)->translatedFormat('MMMM Y') }}</h3>
+
+            @if ($facturesDuMois->isEmpty())
+                <p>Aucune réservation pour ce mois.</p>
+            @else
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Client</th>
+                            <th>Jours Réservés</th>
+                            <th>Total (€)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($facturesDuMois as $facture)
+                            <tr>
+                                <td>{{ $reservation->client_name }}</td>
+                                <td>{{ $facture->jours_reserves }}</td>
+                                <td>{{ number_format($facture->total_reservations, 2) }}€</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @endif
+        </div>
+    </div>
+
+    <!-- 🔥 Total du mois -->
+    <div class="row mt-4">
+        <div class="col-md-8">
+            <h3>Total du Mois : {{ number_format($totalMois, 2) }}€</h3>
+        </div>
+    </div>
+
+    <!-- Div 2 : Détails des réservations du mois sélectionné -->
+    <div class="row mt-4">
+        <div class="col-md-8">
+            <h3>Recettes du Mois : {{ $moisSelectionne }}</h3>
+
+            @if ($facturesDuMois->isEmpty())
+                <p>Aucune réservation pour ce mois.</p>
+            @else
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Client</th>
+                            <th>Jours Réservés</th>
+                            <th>Total (€)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($facturesDuMois as $facture)
+                            <tr>
+                                <td>{{ $facture->client }}</td>
+                                <td>{{ $facture->jours_reserves }}</td>
+                                <td>{{ number_format($facture->total_reservations, 2) }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @endif
+        </div>
+    </div>
+
+    <!-- Div 3 : Total du mois -->
+    <div class="row mt-4">
+        <div class="col-md-8">
+            <h3>Total du Mois : {{ number_format($totalMois, 2) }}€</h3>
+        </div>
+    </div>
+</div>
+@endsection
+
+
+
+<!-- 🔥 Détails des réservations pour le mois sélectionné -->
+<div class="row mt-4">
+        <div class="col-md-8">
+            <h3>Recettes du Mois : {{ \Carbon\Carbon::createFromFormat('Y-m', $moisSelectionne)->translatedFormat('MMMM Y') }}</h3>
+
+            @if ($facturesDuMois->isEmpty())
+                <p>Aucune réservation pour ce mois.</p>
+            @else
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Client</th>
+                            <th>Jours Réservés</th>
+                            <th>Total (€)</th>
+                            <th>Envoyer Facture</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($facturesDuMois as $facture)
+                            <tr>
+                                <td>{{ $facture->client_name }}</td>
+                                <td>{{ $facture->jours_reserves }}</td>
+                                <td>{{ number_format($facture->total_reservations, 2) }}€</td>
+                                <td>
+                                    <form action="{{ route('factures.envoyer', ['client' => $facture->client_name, 'mois' => $moisSelectionne]) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-primary">Envoyer</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @endif
+        </div>
+    </div>
+
+    <!-- 🔥 Total du mois -->
+    <div class="row mt-4">
+        <div class="col-md-8">
+            <h3>Total du Mois : {{ number_format($totalMois, 2) }}€</h3>
+        </div>
+    </div>

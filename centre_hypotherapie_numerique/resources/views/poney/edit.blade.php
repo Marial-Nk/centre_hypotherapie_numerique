@@ -14,12 +14,12 @@
             @csrf
             @method('PUT')
 
-            <label>Nom :
+            <label>Nom du poney
                 <input type="text" name="name" value="{{ $poney->name }}" required>
             </label>
 
-            <label>Temps de Travail (h) :
-                <input type="number" name="work_time" value="{{ $poney->work_time }}" required>
+            <label>Heure de travail max (h)
+                <input type="number" name="max_work_time" value="{{ $poney->max_work_time }}" required>
             </label>
 
             <button type="submit">Mettre à jour</button>

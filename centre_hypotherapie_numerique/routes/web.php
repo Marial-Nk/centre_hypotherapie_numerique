@@ -7,14 +7,13 @@ use App\Http\Controllers\PoneyController;
 use App\Http\Controllers\GestionJournaliereController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\FactureController;
+use App\Http\Controllers\KPIController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})-> name('home');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::resource('gestion-journaliere', GestionJournaliereController::class);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -43,4 +42,11 @@ Route::post('/gestion-journaliere/store', [ReservationController::class, 'store'
     ->name('reservation.store');
 
 Route::get('/factures', [FactureController::class, 'index'])->name('factures.index');
+
+Route::get('/poney/kpi', [KPIController::class, 'index'])->name('poney.kpi');
+
+Route::get('/kpi-poneys', [PoneyController::class, 'poneyKpi'])->name('poney.kpi');
+
+Route::post('/factures/envoyer', [FacturesController::class, 'envoyerFacture'])->name('factures.envoyer');
+
 require __DIR__.'/auth.php';
