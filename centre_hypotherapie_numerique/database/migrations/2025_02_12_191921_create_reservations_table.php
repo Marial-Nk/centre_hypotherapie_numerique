@@ -18,7 +18,7 @@ return new class extends Migration
             $table->time('start_time');
             $table->time('end_time');
             $table->decimal('price', 8, 2);
-            $table->date('date');
+            $table->date('date')->default(DB::raw('CURRENT_DATE'));
             $table->timestamps();
         });
     }

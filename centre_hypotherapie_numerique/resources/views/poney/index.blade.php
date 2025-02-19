@@ -1,61 +1,55 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion des Poneys</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
-</head>
-<body>
-    <main class="container">
-        <h2>Liste des Poneys</h2>
+@extends('layouts.app')
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>Temps de Travail (h)</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
+@section('Poney')
+
+@section('content')
+    <div class="flex max-w-6xl mx-auto p-6 space-x-8">
+        <!-- Div 1 : Liste des poneys -->
+        <div class="w-1/2">
+            <h2 class="text-xl font-bold mb-4 text-center">Poneys</h2>
+
+            <div class="space-y-4">
                 @foreach($poneys as $poney)
-                <tr>
-                    <td>{{ $poney->name }}</td>
-                    <td>{{ $poney->work_time }} h</td>
-                    <td>
-                        <a href="{{ route('poney.edit', $poney->id) }}" class="outline">Modifier</a>
+                    <div class="grid grid-cols-3 items-center p-2">
+                        <span>{{ $poney->name }}</span>
+                        <span>
+                            {{ $poney->work_time }}h sur {{ $poney->max_work_time }}h
+                            <br>
+                            <progress value="{{ $poney->work_time }}" max="{{ $poney->max_work_time }}"></progress>
+                        </span>
+                        <div class="flex space-x-2">
+                            <a href="{{ route('poney.edit', $poney->id) }}" class="text-blue-600">Modifier</a>
 
-                        <form action="{{ route('poney.destroy', $poney->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="outline secondary">Supprimer</button>
-                        </form>
-
-                    </td>
-
-                </tr>
+                            <form action="{{ route('poney.destroy', $poney->id) }}" method="POST" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-600">Supprimer</button>
+                            </form>
+                        </div>
+                    </div>
                 @endforeach
-            </tbody>
-        </table>
-        <!-- Formulaire d'ajout d'un nouveau poney -->
-        <div class="container">
-            <h3>Ajouter un Poney</h3>
-            <form action="{{ route('poney.store') }}" method="POST">
-                @csrf
-
-                <label>Nom :
-                    <input type="text" name="name" placeholder="Nom du poney" required>
-                </label>
-
-                <label>Temps de Travail (h) :
-                    <input type="number" name="work_time" placeholder="Heures de travail" required>
-                </label>
-
-                <button type="submit" class="primary">Ajouter</button>
-            </form>
+            </div>
         </div>
 
-    </main>
-</body>
-</html>
+        <!-- Div 2 : Formulaire d'ajout -->
+        <div class="w-1/2">
+            <h3 class="text-xl font-bold mb-4 text-center">Ajouter un nouveau poney</h3>
+            
+            <form action="{{ route('poney.store') }}" method="POST" class="space-y-4">
+                @csrf
+
+                <div>
+                    <label class="block">Nom du poney</label>
+                    <input type="text" name="name" placeholder="Nom du poney" required class="w-full p-2 border-gray-300 border rounded">
+                </div>
+
+                <div>
+                    <label class="block">Heure de travail max (h)</label>
+                    <input type="number" name="max_work_time" required min="1" class="w-full p-2 border-gray-300 border rounded">
+                </div>
+
+                <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded">Ajouter</button>
+            </form>
+        </div>
+    </div>
+@endsection

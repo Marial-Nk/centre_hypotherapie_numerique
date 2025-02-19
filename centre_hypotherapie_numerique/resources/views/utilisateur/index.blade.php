@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion des utilisateurs</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
-</head>
-<body>
-    <main class="container">
+@extends('layouts.app')
+
+@section('title', 'Liste des Voitures')
+
+@section('content')
         <h2>Gestion des utilisateurs</h2>
         <a href="{{ route('users.logoutAndRegister') }}" role="button" class="outline">Ajouter un utilisateur</a>
 
@@ -39,6 +34,4 @@
                 @endforeach
             </tbody>
         </table>
-    </main>
-</body>
-</html>
+@endsection

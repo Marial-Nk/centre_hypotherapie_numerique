@@ -1,60 +1,80 @@
 @extends('layouts.app')
 
-@section('content')
-<div class="container">
-    <h1 class="mt-4">Gestion des Factures</h1>
+@section('title', 'Gestion des Factures')
 
-    <!-- Div 1 : Historique des recettes -->
+@section('content')
+<h2>{{ \Carbon\Carbon::now()->isoFormat('dddd D MMMM YYYY') }}</h2>
+
+<div class="container">
+    <!-- Historique des recettes -->
     <div class="row">
         <div class="col-md-6">
             <h3>Historique des Recettes</h3>
-            <ul class="list-group">
-                @foreach ($recettesParMois as $recette)
-                    <li class="list-group-item">
-                        <a href="{{ route('factures.index', ['mois' => $recette->mois]) }}">
-                            {{ $recette->mois }} - {{ number_format($recette->total, 2) }}€
-                        </a>
-                    </li>
-                @endforeach
-            </ul>
         </div>
     </div>
 
-    <!-- Div 2 : Détails des réservations du mois sélectionné -->
-    <div class="row mt-4">
-        <div class="col-md-8">
-            <h3>Recettes du Mois : {{ $moisSelectionne }}</h3>
+    <table class="table">
+        <tbody>
+            @foreach ($recettesParMois as $recette)
+            <tr>
+                <td>
+                    <details>
+                        <summary>{{ \Carbon\carbon::parse(trim($recette->mois))->translatedFormat('F Y') }}</summary>
+                        @foreach ($clientsParMois as $mois => $clients)
+                            @foreach ($clients as $client)
+                                <p>{{$client->client_name}}              {{$client-> total_client}}€</p>
+                            @endforeach
+                        @endforeach
+                    </details>
+                </td>
+                <td>{{ number_format($recette->total, 2) }}€</td>
+            </tr>
 
-            @if ($facturesDuMois->isEmpty())
-                <p>Aucune réservation pour ce mois.</p>
-            @else
+            @endforeach
+        </tbody>
+    </table>
+</div>
+
+<!-- Div 2 : Détails des réservations du mois sélectionné -->
+<div class="row mt-4">
+    <div class="col-md-8">
+        <h3>Mois en cours</h3>
+        @foreach ($recettesParMois as $recette)
+            @if ( \Carbon\carbon::parse(trim($recette->mois))->month  ==  \Carbon\Carbon::now()->month )
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Client</th>
-                            <th>Jours Réservés</th>
-                            <th>Total (€)</th>
+                            <th>Nom du client</th>
+                            <th>Nombre de jours</th>
+                            <th>Montant à payer</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($facturesDuMois as $facture)
-                            <tr>
-                                <td>{{ $facture->client }}</td>
-                                <td>{{ $facture->jours_reserves }}</td>
-                                <td>{{ number_format($facture->total_reservations, 2) }}</td>
-                            </tr>
+                        @foreach ($clientsParMois as $mois => $clients)
+                            @foreach ($clients as $client)
+                                <tr>
+                                    <td>{{ $client->client_name }}</td>
+                                    <td>{{ $client->jours_reserves }}</td>
+                                    <td>{{ number_format($client->total_client, 2) }}€</td>
+                                </tr>
+                            @endforeach
                         @endforeach
                     </tbody>
                 </table>
-            @endif
-        </div>
+            @endif 
+        @endforeach
     </div>
 
-    <!-- Div 3 : Total du mois -->
-    <div class="row mt-4">
-        <div class="col-md-8">
-            <h3>Total du Mois : {{ number_format($totalMois, 2) }}€</h3>
-        </div>
-    </div>
+    <div>
+        @foreach ($recettesParMois as $recette)
+            @if ( \Carbon\carbon::parse(trim($recette->mois))->month  ==  \Carbon\Carbon::now()->month )
+                <p> Total : {{ number_format($recette->total, 2) }}€   <a href="#">Envoyer toutes les factures </a></p>
+            @endif 
+        @endforeach
+    
 </div>
+</div>
+
+
+
 @endsection
