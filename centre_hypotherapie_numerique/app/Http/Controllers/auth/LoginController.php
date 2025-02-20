@@ -28,7 +28,7 @@ class LoginController extends Controller
 
         if ($user && Hash::check($request->input('password'), $user->password)) {
             Session::put('user', $user);
-            return redirect('/dashboard');
+            return redirect('/kpi-poneys');
         }
 
         return "Nom ou mot de passe incorrect";

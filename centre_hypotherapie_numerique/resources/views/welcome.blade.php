@@ -37,7 +37,8 @@
 </head>
 <body>
 
-    <h1>Bienvenue sur notre application Laravel</h1>
+    <h1>Bienvenue </h1>
+    <h1> Centre Hypotherapie Numerique</h1>
     <p>Veuillez vous inscrire ou vous connecter pour accéder au tableau de bord.</p>
 
     <div class="buttons">

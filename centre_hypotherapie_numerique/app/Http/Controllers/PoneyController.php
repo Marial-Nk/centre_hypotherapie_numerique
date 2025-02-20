@@ -68,9 +68,10 @@ class PoneyController extends Controller
      */
     public function update(Request $request, Poney $poney)
     {
+        // dd($request->all());
         $request->validate([
             'name' => 'required|string|max:255',
-            'work_time' => 'required|integer|min:0',
+            'work_time' => 'integer|min:0',
             'max_work_time' => 'required|integer|min:1',
         ]);
 

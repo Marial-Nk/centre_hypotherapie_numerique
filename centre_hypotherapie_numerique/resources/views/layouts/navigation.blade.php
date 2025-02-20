@@ -1,20 +1,19 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="padding: 15px; border: 0.7px solid black;">
     <div class="container">
-        <a class="navbar-brand" href="{{ route('home') }}">Accueil</a>
         
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
             
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('poney.kpi') ? 'active' : '' }}" href="{{ route('poney.kpi') }}">Home</a>
+                </li>
+
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('gestion-journaliere.index') ? 'active' : '' }}" href="{{ route('gestion-journaliere.index') }}">Réservation</a>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('poney.index') ? 'active' : '' }}" href="{{ route('poney.index') }}">Poney</a>
-                </li>
-                
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('poney.kpi') ? 'active' : '' }}" href="{{ route('poney.kpi') }}">Analyse d’Utilisation</a>
                 </li>
 
                 <li class="nav-item">
@@ -29,8 +28,8 @@
     </div>
 
     <!-- Settings Dropdown -->
-    <div class="hidden sm:flex sm:items-center sm:ms-6">
-        <x-dropdown align="right" width="48">
+    <div class="hidden sm:flex sm:items-center sm:ms-6" style="padding-right: 30px;">
+        <x-dropdown align="right" width="48" >
             <x-slot name="trigger">
                 <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
                     <div>{{ Auth::user()->name }}</div>

@@ -33,6 +33,7 @@ Route::get('/logout-and-register', [UserController::class, 'logoutAndRegister'])
 
 Route::resource('poney', PoneyController::class)->middleware('auth');
 
+
 Route::get('/gestion-journaliere', [GestionJournaliereController::class, 'index'])
     ->middleware('auth')
     ->name('gestion-journaliere.index');
@@ -47,6 +48,6 @@ Route::get('/poney/kpi', [KPIController::class, 'index'])->name('poney.kpi');
 
 Route::get('/kpi-poneys', [PoneyController::class, 'poneyKpi'])->name('poney.kpi');
 
-Route::post('/factures/envoyer', [FacturesController::class, 'envoyerFacture'])->name('factures.envoyer');
+Route::post('/factures/envoyer', [FactureController::class, 'envoyerFacture'])->name('factures.envoyer');
 
 require __DIR__.'/auth.php';
