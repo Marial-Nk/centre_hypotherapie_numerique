@@ -14,7 +14,7 @@ class GestionJournaliereController extends Controller
         $date_du_jour = Carbon::now()->format('Y-m-d');
 
         // Récupérer les réservations du jour
-        $reservations = Reservation::whereDate('start_time', $date_du_jour)->with('poneys')->get();
+        $reservations = Reservation::whereDate('date', $date_du_jour)->with('poneys')->get();
         
         // Récupérer la liste des poneys
         $poneys = Poney::all();
